@@ -4,49 +4,39 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
 
 		<script>
 			const ROOM_ID = "<%= roomId %>"
+			const USERNAME = "<%= username %>"
 		</script>
+
+		<link rel="stylesheet" href="/room-style.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+			integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+			crossorigin="anonymous"
+		/>
 
 		<script src="/socket.io/socket.io.js" defer></script>
 		<script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js" defer></script>
-		<script src="script.js" defer></script>
-
-		<title>Document</title>
-
-		<style>
-			body {
-				margin: 0;
-				background-color: darkblue;
-			}
-
-			#videos {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				/* flex-wrap: wrap; */
-				height: 100vh;
-				width: 100vh;
-			}
-
-			video {
-				height: 250px;
-				width: 250px;
-				background-color: red;
-				margin: 20px;
-			}
-		</style>
+		<script src="/room-script.js" defer></script>
 	</head>
 	<body>
-		<div id="videos">
-			<!-- <div class="video"></div>
-			<div class="video"></div>
-			<div class="video"></div>
-			<div class="video"></div>
-			<div class="video"></div>
-			<div class="video"></div>
-			<div class="video"></div> -->
+		<div id="sidebar">
+			<div id="my-video"></div>
+			<div id="chat">
+				<div id="chat-messages"></div>
+				<div id="chat-footer">
+					<form id="chat-form">
+						<input id="msg" type="text" placeholder="Enter Message" required autocomplete="off" />
+						<button class="btn"><i class="fas fa-paper-plane"></i> Send</button>
+					</form>
+				</div>
+			</div>
 		</div>
+
+		<div id="video-chat"></div>
 	</body>
 </html>

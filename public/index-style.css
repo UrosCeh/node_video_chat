@@ -1,0 +1,87 @@
+:root {
+	--primary-a: #242444;
+	--primary-b: #06061a;
+	--secondary: #641c77;
+	--tertiary: #d07651;
+	--quaternary: #e9b825;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: "Roboto", sans-serif;
+	font-size: 16px;
+	background: var(--primary-b);
+}
+
+.join-container {
+	max-width: 500px;
+	margin: 80px auto;
+	color: #fff;
+}
+
+.join-header {
+	text-align: center;
+	padding: 20px;
+	background: var(--primary-a);
+	color: var(--quaternary);
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.join-main {
+	padding: 30px 40px 10px;
+	background-color: var(--secondary);
+}
+
+.join-main h3 {
+	padding-bottom: 30px;
+}
+
+.join-main span {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.join-main p {
+	margin-bottom: 20px;
+}
+
+.join-main .form-control {
+	margin-bottom: 20px;
+}
+
+.join-main label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.join-main input {
+	font-size: 16px;
+	padding: 5px;
+	height: 40px;
+	width: 100%;
+}
+
+.join-main select {
+	font-size: 16px;
+	padding: 5px;
+	height: 40px;
+	width: 100%;
+}
+
+.join-main .btn {
+	border-radius: 10px;
+	padding: 15px 0;
+	margin: 20px 0;
+	font-size: 16px;
+	background-color: #fff;
+	color: var(--primary-b);
+	background-color: var(--tertiary);
+	width: 100%;
+	cursor: pointer;
+}
