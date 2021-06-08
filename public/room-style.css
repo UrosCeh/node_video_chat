@@ -19,7 +19,7 @@ body {
 #sidebar {
 	max-width: 300px;
 	height: 100%;
-	background-color: var(--tertiary);
+	background-color: var(--primary-a);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -27,9 +27,6 @@ body {
 
 #my-video {
 	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
 #my-video video {
@@ -41,8 +38,6 @@ body {
 	flex-basis: auto;
 	width: 100%;
 	height: 100%;
-	/* display: grid;
-	grid-template-rows: auto 40px; */
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
@@ -69,15 +64,14 @@ body {
 	align-self: flex-start;
 	background-color: var(--tertiary);
 }
-#chat-messages .peer-message span {
-	display: block;
-	padding: 1px;
-	font-weight: bold;
-}
-
 #chat-messages .my-message {
 	align-self: flex-end;
 	background-color: var(--quaternary);
+}
+#chat-messages .bot-message {
+	align-self: center;
+	background-color: var(--secondary);
+	color: white;
 }
 
 #chat-messages p {
@@ -105,14 +99,11 @@ body {
 	height: 100vh;
 	background-color: var(--primary-b);
 	display: flex;
-	justify-content: space-evenly;
-	flex-wrap: wrap;
-	overflow-y: scroll;
+	justify-content: center;
+	align-items: center;
 }
 
-#video-chat .video {
-	margin: 10px 0;
-	width: 200px;
-	height: 200px;
-	background-color: chartreuse;
+#video-chat video {
+	min-width: 300px;
+	max-width: 800px;
 }

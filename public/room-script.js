@@ -8,7 +8,6 @@ const myPeer = new Peer(undefined, {
 	host: "/",
 	port: "3001"
 })
-const myStream = document.createElement("video")
 
 const peers = {}
 
@@ -18,15 +17,15 @@ chatForm.addEventListener("submit", (e) => {
 	const msg = e.target.elements.msg.value
 	socket.emit("send-message", msg)
 
-	outputMessage(msg)
+	outputMessage(msg, true)
 
 	e.target.elements.msg.value = ""
 	e.target.elements.msg.focus()
 })
 
-myStream.muted = true
 myPeer.on("open", (id) => {
-	socket.emit("join-room", ROOM_ID, id, USERNAME)
+	socket.emit("join-room", ROOM_ID, id)
+	outputMessage("You entered the chat")
 })
 
 navigator.mediaDevices
@@ -35,27 +34,24 @@ navigator.mediaDevices
 		audio: true
 	})
 	.then((stream) => {
-		addVideoStream(myStream, stream, true)
+		addMyStream(stream)
 
 		myPeer.on("call", (call) => {
-			// provides call callback
-			call.answer(stream) // answering the call with our MediaStream (optional)
+			call.answer(stream)
 
-			const video = document.createElement("video")
 			call.on("stream", (userVideoStream) => {
-				// add all the users who are already in the call
-				addVideoStream(video, userVideoStream, false)
+				addPeerStream(userVideoStream, call.peer)
 			})
 		})
 
 		socket.on("user-connected", (userId) => {
-			// add all users who connected after us
 			connectToNewUser(userId, stream)
+			outputMessage("New user entered the chat")
 		})
 	})
 
-socket.on("chat-message", (msg, username) => {
-	outputMessage(msg, username)
+socket.on("chat-message", (msg) => {
+	outputMessage(msg, false, true)
 })
 
 socket.on("user-disconnected", (userId) => {
@@ -63,49 +59,68 @@ socket.on("user-disconnected", (userId) => {
 })
 
 function connectToNewUser(userId, stream) {
-	const video = document.createElement("video")
-	const call = myPeer.call(userId, stream) // userID is mypeerId and we are providing our mediaStream
+	const call = myPeer.call(userId, stream)
+	peers[userId] = 1
 	call.on("stream", (userVideoStream) => {
-		addVideoStream(video, userVideoStream, false)
-	})
-	call.on("close", () => {
-		video.remove()
+		addPeerStream(userVideoStream, userId)
 	})
 
-	peers[userId] = call
+	call.on("close", () => {
+		removePeerStream()
+	})
 }
 
-function addVideoStream(video, stream, my) {
-	console.log("called")
+function addMyStream(stream) {
+	const MyStream = document.createElement("video")
+	MyStream.muted = true
+	MyStream.srcObject = stream
+	MyStream.addEventListener("loadedmetadata", () => {
+		MyStream.play()
+	})
+	myVideo.appendChild(MyStream)
+}
+
+function addPeerStream(stream, id) {
+	const video = document.createElement("video")
 	video.srcObject = stream
+	if (document.getElementById(id) != null) {
+		console.log("return")
+		return
+	}
+	video.id = id
 	video.addEventListener("loadedmetadata", () => {
 		video.play()
 	})
-	if (my) myVideo.append(video)
-	else peerVideos.append(video)
-	// setChatMessagesHeightDynamically()
+
+	peerVideos.append(video)
+}
+
+function removePeerStream() {
+	document.querySelector("#video-chat").innerHTML = ""
 }
 
 function setChatMessagesHeightDynamically() {
-	const divHeight = window.innerHeight - document.getElementById("my-video").offsetHeight - chatFooter.offsetHeight
+	const divHeight = window.innerHeight - myVideo.offsetHeight - chatFooter.offsetHeight
+	console.log(myVideo.offsetHeight)
 	chatMessages.style.height = `${divHeight}px`
 }
 window.addEventListener("resize", setChatMessagesHeightDynamically)
-// document.addEventListener("DOMContentLoaded", setChatMessagesHeightDynamically)
 
-function outputMessage(msg, peer) {
-	console.log(peers)
+function outputMessage(msg, my, peer) {
 	const div = document.createElement("div")
-	if (!peer) {
+	if (my) {
 		div.classList.add("my-message")
-	} else {
+		setChatMessagesHeightDynamically()
+	} else if (peer) {
 		div.classList.add("peer-message")
-		const span = document.createElement("span")
-		span.innerText = `${peer}`
-		div.appendChild(span)
+		setChatMessagesHeightDynamically()
+	} else {
+		div.classList.add("bot-message")
 	}
 	const p = document.createElement("p")
 	p.innerText = msg
 	div.appendChild(p)
 	chatMessages.appendChild(div)
+
+	chatMessages.scrollTop = chatMessages.scrollHeight
 }
