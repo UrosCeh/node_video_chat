@@ -21,7 +21,6 @@ body {
 .join-container {
 	max-width: 500px;
 	margin: 80px auto;
-	color: #fff;
 }
 
 .join-header {
@@ -33,55 +32,55 @@ body {
 	border-top-right-radius: 5px;
 }
 
-.join-main {
+#join-room-form {
 	padding: 30px 40px 10px;
 	background-color: var(--secondary);
 }
 
-.join-main h3 {
-	padding-bottom: 30px;
-}
-
-.join-main span {
-	font-weight: bold;
-	text-decoration: underline;
-}
-
-.join-main p {
+#join-room-form .form-control {
 	margin-bottom: 20px;
 }
 
-.join-main .form-control {
-	margin-bottom: 20px;
-}
-
-.join-main label {
+#join-room-form label {
+	color: #fff;
 	display: block;
 	margin-bottom: 5px;
 }
 
-.join-main input {
+#join-room-form input {
 	font-size: 16px;
 	padding: 5px;
 	height: 40px;
 	width: 100%;
 }
 
-.join-main select {
+#join-room-form .btn {
+	border-radius: 10px;
+	padding: 15px 0;
+	margin: 20px 0;
 	font-size: 16px;
-	padding: 5px;
-	height: 40px;
+	background-color: #fff;
+	color: #fff;
+	background-color: var(--primary-a);
 	width: 100%;
+	cursor: pointer;
 }
 
-.join-main .btn {
+/* ----------------------- */
+
+#create-room-form {
+	padding: 10px 40px;
+	background-color: var(--primary-a);
+}
+
+#create-room-form .btn {
 	border-radius: 10px;
 	padding: 15px 0;
 	margin: 20px 0;
 	font-size: 16px;
 	background-color: #fff;
 	color: var(--primary-b);
-	background-color: var(--tertiary);
+	background-color: var(--quaternary);
 	width: 100%;
 	cursor: pointer;
 }

@@ -1,17 +1,27 @@
-const form = document.getElementById("join-room-form")
+const joinForm = document.getElementById("join-room-form")
+const createForm = document.getElementById("create-room-form")
 
-form.addEventListener("submit", (e) => {
+joinForm.addEventListener("submit", (e) => {
 	e.preventDefault()
-	let username = e.target.username.value.trim()
-	let privateRoom = e.target.privateRoom.value.trim()
-	let room = e.target.room.value
-	if (room === "create_private_room") {
-		room = Math.random().toString(36).substr(2, 11)
-	}
+	let privateRoomKey = e.target.privateRoom.value.trim()
+	// room = Math.random().toString(36).substr(2, 11)
 
-	if (privateRoom === "") {
-		window.location.pathname = `chat/${room}/${username}`
+	if (privateRoomKey !== "" && isPrivateRoomKeyValid(privateRoomKey)) {
+		window.location.pathname = `chat/${privateRoomKey}/${username}`
 	} else {
-		window.location.pathname = `chat/${privateRoom}/${username}`
+		alert("Not a valid private room key!")
 	}
 })
+
+createForm.addEventListener("submit", (e) => {
+	e.preventDefault()
+
+	let room = Math.random().toString(36).substr(2, 11)
+
+	window.location.pathname = `chat/${room}/${username}`
+})
+
+function isPrivateRoomKeyValid(key) {
+	const re = /^[0-9a-z]{10}$/
+	return re.test(key)
+}

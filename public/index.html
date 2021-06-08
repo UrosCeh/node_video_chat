@@ -24,14 +24,10 @@
 			<main class="join-main">
 				<form action="" method="" id="join-room-form">
 					<div class="form-control">
-						<label for="username">Username</label>
-						<input type="text" name="username" id="username" placeholder="Enter username..." required />
+						<label for="privateRoom">Private Room</label>
+						<input type="text" name="privateRoom" id="privateRoom" placeholder="Enter a key to the private room" required />
 					</div>
-					<div class="form-control">
-						<label for="username">Private Room</label>
-						<input type="text" name="privateRoom" id="privateRoom" placeholder="Enter a key to the private room" />
-					</div>
-					<div class="form-control">
+					<!-- <div class="form-control">
 						<label for="room">Room</label>
 						<select name="room" id="room">
 							<option value="create_private_room">Create Your Room</option>
@@ -42,8 +38,12 @@
 							<option value="Apex_Legends">Apex Legends</option>
 							<option value="Fortnite">Fortnite</option>
 						</select>
-					</div>
-					<button type="submit" class="btn">Join Chat</button>
+					</div> -->
+					<button type="submit" class="btn">Join Private Room</button>
+				</form>
+				<hr />
+				<form action="" id="create-room-form">
+					<button type="submit" class="btn">Create Your Room</button>
 				</form>
 			</main>
 		</div>
