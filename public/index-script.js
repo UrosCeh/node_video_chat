@@ -7,7 +7,7 @@ joinForm.addEventListener("submit", (e) => {
 	// room = Math.random().toString(36).substr(2, 11)
 
 	if (privateRoomKey !== "" && isPrivateRoomKeyValid(privateRoomKey)) {
-		window.location.pathname = `chat/${privateRoomKey}/${username}`
+		window.location.pathname = `chat/${privateRoomKey}`
 	} else {
 		alert("Not a valid private room key!")
 	}
@@ -18,7 +18,7 @@ createForm.addEventListener("submit", (e) => {
 
 	let room = Math.random().toString(36).substr(2, 11)
 
-	window.location.pathname = `chat/${room}/${username}`
+	window.location.pathname = `chat/${room}`
 })
 
 function isPrivateRoomKeyValid(key) {
