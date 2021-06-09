@@ -4,7 +4,7 @@ const chatMessages = document.getElementById("chat-messages")
 const chatFooter = document.getElementById("chat-footer")
 const chatForm = document.getElementById("chat-form")
 const peerVideos = document.getElementById("video-chat")
-const myPeer = new Peer(undefined, {
+const peer = new Peer(undefined, {
 	host: "/",
 	port: "3001"
 })
@@ -23,7 +23,7 @@ chatForm.addEventListener("submit", (e) => {
 	e.target.elements.msg.focus()
 })
 
-myPeer.on("open", (id) => {
+peer.on("open", (id) => {
 	socket.emit("join-room", ROOM_ID, id)
 	outputMessage("You entered the chat")
 })
@@ -36,7 +36,7 @@ navigator.mediaDevices
 	.then((stream) => {
 		addMyStream(stream)
 
-		myPeer.on("call", (call) => {
+		peer.on("call", (call) => {
 			call.answer(stream)
 
 			call.on("stream", (userVideoStream) => {
@@ -58,9 +58,16 @@ socket.on("user-disconnected", (userId) => {
 	if (peers[userId]) peers[userId].close()
 })
 
+socket.on("room-full-error", (msg) => {
+	alert(msg)
+	window.location.path = "/"
+	// setTimeout(() => {
+	// }, 3000)
+})
+
 function connectToNewUser(userId, stream) {
-	const call = myPeer.call(userId, stream)
-	peers[userId] = 1
+	const call = peer.call(userId, stream)
+	peers[userId] = call
 	call.on("stream", (userVideoStream) => {
 		addPeerStream(userVideoStream, userId)
 	})
@@ -71,13 +78,14 @@ function connectToNewUser(userId, stream) {
 }
 
 function addMyStream(stream) {
-	const MyStream = document.createElement("video")
-	MyStream.muted = true
-	MyStream.srcObject = stream
-	MyStream.addEventListener("loadedmetadata", () => {
-		MyStream.play()
+	const myVideoStream = document.createElement("video")
+	myVideoStream.muted = true
+	myVideoStream.srcObject = stream
+	myVideoStream.addEventListener("loadedmetadata", () => {
+		myVideoStream.play()
 	})
-	myVideo.appendChild(MyStream)
+
+	myVideo.appendChild(myVideoStream)
 }
 
 function addPeerStream(stream, id) {
